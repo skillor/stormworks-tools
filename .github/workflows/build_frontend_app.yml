@@ -33,7 +33,7 @@ jobs:
     - name: Copy dist to webserver static
       run: |
         rm -rf ./docs/app
-        cp -r ./dist/card-games ./docs/app
+        cp -r ./dist/${{ github.event.repository.name }} ./docs/app
     - name: Commit static
       run: |
         git config --global user.name "Build Runner"
