@@ -33,7 +33,8 @@ jobs:
     - name: Copy dist to webserver static
       run: |
         rm -rf ./docs/app
-        cp -r ./dist/${{ github.event.repository.name }} ./docs/app
+        cp -r ./dist/${{ github.event.repository.name }}/browser ./docs/app
+        cp ./dist/${{ github.event.repository.name }}/3rdpartylicenses.txt ./docs/app/3rdpartylicenses.txt
     - name: Commit static
       run: |
         git config --local user.email "action@github.com"
