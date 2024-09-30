@@ -1,27 +1,55 @@
-<div style="display: flex;flex-direction: row;width: 100%;gap: 0.5rem;">
-  Paste Vehicle XML:
-  <input style="flex-grow: 1;" type="text" [(ngModel)]="xmlInput" (input)="showLogic()">
-</div>
-@if (xmlInput && parseError) {
-  <h1>{{parseError}}</h1>
-}
-@for (body of out | keyvalue; track $index) {
-  <h1>Body {{$index+1}}</h1>
-  <h2>Inputs</h2>
-  <ul>
-    @for (comp of body.value; track $index) {
-      @if (!comp.type.ignore && comp.type.input) {
-        <li>{{comp.channel}} {{comp.name}} ({{comp.type.title}})</li>
-      }
-    }
-  </ul>
-  <h2>Outputs</h2>
-  <ul>
-    @for (comp of body.value; track $index) {
-      @if (!comp.type.ignore && !comp.type.input) {
-        <li>{{comp.channel}} {{comp.name}} ({{comp.type.title}})</li>
-      }
-    }
-  </ul>
-}
+<div class="container">
+  <button class="btn" (click)="loadXMLFile()">Load XML File</button>
 
+  @if (parseError) {
+    <h1 class="error-message">{{parseError}}</h1>
+  }
+
+  @for (body of out | keyvalue; track $index) {
+    <h1>Body {{$index+1}}</h1>
+
+    <h2>On/Off</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Name</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (comp of body.value; track $index) {
+          @if (!comp.type.ignore && !comp.type.number) {
+            <tr>
+              <td>{{comp.channel}}</td>
+              <td>{{comp.name}}</td>
+              <td>{{comp.type.title}}</td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+
+    <h2>Numbers</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Name</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (comp of body.value; track $index) {
+          @if (!comp.type.ignore && comp.type.number) {
+            <tr>
+              <td>{{comp.channel}}</td>
+              <td>{{comp.name}}</td>
+              <td>{{comp.type.title}}</td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  }
+</div>
